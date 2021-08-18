@@ -55,3 +55,10 @@ jobs:
         run: chmod +x ci/build-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA" && ci/build-docker.sh
       - name: push docker
         run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA" && ci/push-docker.sh
+  Component-test:
+    needs: Docker-image
+    runs-on: ubuntu-latest
+    container: gradle:6-jdk11
+    steps:
+      - name: run component test
+        run: chmod +x ci/component-test.sh && export GIT_COMMIT="GA-$GITHUB_SHA" && ci/component-test.sh
